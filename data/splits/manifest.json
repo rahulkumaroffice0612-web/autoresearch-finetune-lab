@@ -1,0 +1,26 @@
+{
+  "fit": {
+    "name": "fit",
+    "file": "data/splits/fit.jsonl",
+    "n_cases": 960,
+    "n_decisions": 4800,
+    "sha256": "559f11a5eea89b7b59baf1297361a8b85e52cd896e79c629746d90ab093ff034",
+    "case_ids_sha256": "c58b08be491fd4aeff770d24ddc3a61df82ee4651fa73c4deb080661825de47d"
+  },
+  "select": {
+    "name": "select",
+    "file": "data/splits/select.jsonl",
+    "n_cases": 120,
+    "n_decisions": 600,
+    "sha256": "883c010eed14bffaf702c4118987e5b78b09767232ac9b3cbccc5e6e413abc27",
+    "case_ids_sha256": "d9098fc1691e288c938dfba213d1700048cf9ee00f89f30e34f21e0190823ae2"
+  },
+  "calib": {
+    "name": "calib",
+    "file": "data/splits/calib.jsonl",
+    "n_cases": 120,
+    "n_decisions": 600,
+    "sha256": "3feda450774266d678ccfb5858927754623507e0a84d723f4d781902a1330e9a",
+    "case_ids_sha256": "8c29eb615a5b98d3624467feda0014f8d8f69e4af906609370dd0d6d4b3885dc"
+  }
+}

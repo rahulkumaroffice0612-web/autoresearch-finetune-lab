@@ -1,0 +1,8 @@
+{
+  "name": "test",
+  "file": "data/sealed/test.jsonl",
+  "n_cases": 400,
+  "n_decisions": 2000,
+  "sha256": "66342f3036e80e17569aa177da94a3c04181752af5c89402377e903f1040b8ac",
+  "case_ids_sha256": "441ba1b97b99f2e409e82e7186a1458751696f2e3fb7de5a573fe65185b00852"
+}
