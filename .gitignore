@@ -22,7 +22,7 @@ artifacts/*.out
 artifacts/*.log
 
 # Raw source image for the HF hero (published to HF as lazydecider.png)
-data/Gemini_Generated_Image_*.png
+data/*_Generated_Image_*.png
 
 # Large prediction dumps (regenerable by the scorer)
 artifacts/test_predictions.jsonl

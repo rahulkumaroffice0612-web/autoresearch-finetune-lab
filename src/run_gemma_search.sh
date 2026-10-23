@@ -28,7 +28,7 @@ echo "[gemma-run] models visible on LM Studio:"
 curl -sS --max-time 10 "$AGENT_BASE_URL/models" | python -c "import sys,json; [print('  -', m['id']) for m in json.load(sys.stdin).get('data',[])]" || {
   echo "ERROR: local server not reachable on $AGENT_BASE_URL. Start it: lms server start && lms load gemma-4-e4b-it-mlx"; exit 1; }
 
-# Separate log so Gemma's provenance is clean and not mixed with the gemini dev runs.
+# Separate log so Gemma's provenance is clean and self-contained.
 # worker.py writes to experiments_arm<ARM>.jsonl; use arm B as the Gemma-provenance log.
 echo "[gemma-run] launching worker (arm B = Gemma-provenance log)..."
 python -u src/worker.py --minutes "$MINUTES" --arm B

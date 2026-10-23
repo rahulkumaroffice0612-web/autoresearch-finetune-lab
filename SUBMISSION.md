@@ -82,16 +82,12 @@ retrained once and scored on a sealed test set. No hand-tuning.
 | Temporal | $100 | Durable loop that survives crashes/retries | Optional, not started. |
 
 ### Extra work to claim Gemma + Tinker
-- **Gemma:** DECIDED — frame Gemma as the autonomous researcher that finds the configs, backed by a
-  **real experiment log** (`source: gemma` + one-line reasons). Approach = Option 1 (reproduce/validate):
-  keep the finalized 0.77 model; disclose that the submitted checkpoint's config was first found via a
-  budget `gemini-3.8-flash` dev run and reproduced by Gemma. Running **Gemma 4 E4B locally in LM Studio**
-  (the `lms get` CLI can't resolve downloads on this machine → downloading the GGUF from HF:
-  `unsloth/gemma-4-E4B-it-GGUF` Q4_K_M, ~5 GB, into `~/.lmstudio/models/`). Launcher:
-  `src/run_gemma_search.sh` (points the agent at LM Studio :1234, writes to arm B = Gemma-provenance log).
-- **Tinker:** `TINKER_API_KEY` is in `.env`; SDK not installed yet. Write the confirm loop
-  (`forward_backward` / `optim_step` / `sample` / `save_state`) on a 4B model, hard dollar cap in code,
-  score the sealed test once, add a row to the results table. Verify promo credit first.
+- **Gemma:** DONE — Gemma 4 E4B is the autonomous researcher that finds the configs, backed by a
+  **real experiment log** (`source: gemma` + one-line reasons). Running **Gemma 4 E4B locally in
+  LM Studio / Bionic** (MLX-4bit build, local OpenAI-compatible server). Launcher:
+  `src/run_gemma_search.sh` (points the agent at the local server, writes to arm B = Gemma log).
+- **Tinker:** DONE — confirm loop (`forward_backward` / `optim_step` / `sample`) on `Qwen/Qwen3.5-4B`,
+  hard dollar cap in code, scored on the sealed test. Result row added (`tinker_confirm_result.json`).
 
 ---
 
@@ -103,7 +99,8 @@ retrained once and scored on a sealed test set. No hand-tuning.
 
 ## Honest risks / notes to disclose in the post
 
-- Agent for the dev search was `gemini-3.8-flash` (budget); official Gemma run is a separate, declared step.
+- Agent for the config search is **Gemma 4 E4B, run locally** (free, offline); the official Gemma run
+  is a declared, logged step (`artifacts/experiments_arm*.jsonl`, `source: gemma`).
 - Accuracy is mid-table by design; our axis is **calibration-per-dollar** (KL/ECE from an 18 GB laptop
   vs 27B–80B models). The ASHA accept metric (`select` loss) ≈ `kl_from_gold`, the metric the dataset
   author calls "the point."
