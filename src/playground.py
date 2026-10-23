@@ -124,7 +124,7 @@ def predict(vendor, invoice_total, po_total, received_qty, ordered_qty,
     try:
         model, tok = _load()
     except Exception as e:  # pragma: no cover
-        return f"### ⚠️ Model failed to load\n```\n{e}\n```", None
+        return f"### ⚠️ Model failed to load\n```\n{e}\n```", []
 
     state = build_state(vendor, invoice_total, po_total, received_qty, ordered_qty,
                         days_until_due, discount_days, terms, disputes_12m, invoices_12m, condition)
@@ -139,19 +139,16 @@ def predict(vendor, invoice_total, po_total, received_qty, ordered_qty,
     md = [f"## Decision: **{top.replace('_', ' ')}**  ·  {conf*100:.0f}% confident", ""]
 
     rows = {q: answers.get(q, {}).get("probabilities", {}) for q in QUESTIONS}
-    # A tidy table of all five decisions.
-    table = {"Decision": [], "Top choice": [], "Confidence": [], "Full distribution": []}
+    # A tidy table of all five decisions, as list-of-rows (Gradio Dataframe-friendly).
     labels = {"discrepancy_severity": "Discrepancy severity", "disposition": "Disposition",
               "duplicate": "Duplicate?", "matches_order": "Matches order?", "urgency": "Urgency"}
+    table = []
     for q, probs in rows.items():
         if not probs:
             continue
         t = max(probs, key=probs.get)
-        table["Decision"].append(labels.get(q, q))
-        table["Top choice"].append(t.replace("_", " "))
-        table["Confidence"].append(f"{probs[t]*100:.0f}%")
         dist = "  ".join(f"{k}:{v:.2f}" for k, v in sorted(probs.items(), key=lambda kv: -kv[1]))
-        table["Full distribution"].append(dist)
+        table.append([labels.get(q, q), t.replace("_", " "), f"{probs[t]*100:.0f}%", dist])
     return "\n".join(md), table
 
 
@@ -198,15 +195,13 @@ with gr.Blocks(title="LazyDecider Playground", theme=gr.themes.Soft()) as demo:
         with gr.Column(scale=1):
             headline = gr.Markdown("### Enter a scenario and press **Decide**.")
             table = gr.Dataframe(headers=["Decision", "Top choice", "Confidence", "Full distribution"],
+                                 datatype=["str", "str", "str", "str"], col_count=(4, "fixed"),
                                  label="All five decisions", wrap=True)
 
     inputs = [vendor, invoice_total, po_total, received_qty, ordered_qty,
               days_until_due, discount_days, terms, disputes_12m, invoices_12m, condition]
     preset.change(load_preset, preset, inputs)
-    # Show a "working" note immediately, then run the model.
-    btn.click(lambda: ("### ⏳ Running the model…", None), None, [headline, table]).then(
-        predict, inputs, [headline, table]
-    )
+    btn.click(predict, inputs, [headline, table])
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
