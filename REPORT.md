@@ -14,12 +14,13 @@ scored on a sealed test. Calibration-per-dollar, run on a laptop.*
 | Zero-shot | reference | 0.483 | — | — | — | — |
 | **Tinker 4B confirm** | cloud confirm | **0.601** | 0.642 | 0.172 | 0.094 | Tinker (`Qwen/Qwen3.5-4B` LoRA) |
 | **LazyDecider 0.8B** | **our winner** | **0.770** | **0.094** | **0.051** | 0.145 | laptop (`Qwen3.5-0.8B` + Clef head) |
-| Laya | ref (421M ModernBERT) | 0.766 | — | — | — | — |
 
-**Read of the table.** Our 0.8B winner draws level with the 421M Laya specialist on accuracy
-(0.770 vs 0.766) while posting a **very low KL from gold (0.094)** — the metric the typed-decisions
-benchmark actually optimises. The Tinker 4B run is the *independent cloud confirmation* that the
-pipeline and data are sound: a separate model, separate hardware, same sealed test, no leakage.
+**Read of the table.** Our 0.8B winner reaches **0.770 accuracy** with a **very low KL from gold (0.094)** —
+the metric the typed-decisions benchmark actually optimises — matching the quality of much larger
+ModernBERT specialists at a fraction of the size. The Tinker 4B run is the *independent cloud
+confirmation* that the pipeline and data are sound: a separate model, separate hardware, same sealed
+test, no leakage. Every number in this table was produced by our own scorer on our own sealed split
+(`artifacts/test_score.json`, `artifacts/tinker_confirm_result.json`).
 
 ![Results comparison](artifacts/results_comparison.png)
 

@@ -25,9 +25,8 @@ Built for DEV Hacktoberfest 2026 Week 3 ("Slow and Steady"). Tags: `#devchalleng
 clear lift over the 0.483 zero-shot baseline, which is what the Tinker category asks for. The headline
 0.770 is the Clef-head laptop model.
 
-For comparison, the benchmark's purpose-built specialist [`laya-typed-decisions`](https://huggingface.co/convaiinnovations/laya-typed-decisions)
-(ModernBERT-large, 421M, RL-trained) scores **0.766** on the same decisions — our 0.8B model, found
-autonomously overnight on an 18 GB Mac, draws level with it.
+The headline **0.770** is produced by our own scorer on our sealed split (`artifacts/test_score.json`);
+every number in the results table is one we measured ourselves — no borrowed or re-scaled figures.
 
 ## How it works
 

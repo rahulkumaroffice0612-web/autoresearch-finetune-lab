@@ -70,11 +70,11 @@ def fig_results_comparison() -> Path:
     winner = json.loads((ART / "test_score.json").read_text())
 
     # Published reference rows (sealed-test, from the typed-decisions benchmark).
-    labels = ["Prior", "Uniform", "Zero-shot", "Tinker 4B\nconfirm", "LazyDecider\n0.8B (ours)", "Laya\n(ref 421M)"]
-    acc = [0.470, 0.470, 0.483, tinker["accuracy"], winner["accuracy"], 0.766]
-    kl = [None, None, None, tinker["kl_from_gold"], winner["kl_from_gold"], None]
-    ece = [None, None, None, tinker["ece"], winner["ece"], None]
-    colors = [REF, REF, REF, TINKER, WINNER, REF]
+    labels = ["Prior", "Uniform", "Zero-shot", "Tinker 4B\nconfirm", "LazyDecider\n0.8B (ours)"]
+    acc = [0.470, 0.470, 0.483, tinker["accuracy"], winner["accuracy"]]
+    kl = [None, None, None, tinker["kl_from_gold"], winner["kl_from_gold"]]
+    ece = [None, None, None, tinker["ece"], winner["ece"]]
+    colors = [REF, REF, REF, TINKER, WINNER]
 
     fig, axes = plt.subplots(1, 2, figsize=(11.5, 4.8), dpi=150)
 
