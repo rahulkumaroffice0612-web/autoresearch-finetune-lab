@@ -63,6 +63,22 @@
     <div id="runs" class="runs"></div>
   </section>
 
+  <!-- ===== Generalization: invoice domain ===== -->
+  <section class="panel" id="generalize">
+    <div class="panel-head">
+      <h2>Generalizes to a new domain <span class="sub">— invoice processing, the model's best (0.840)</span></h2>
+      <div class="controls">
+        <button id="prevCase" class="ghost-btn">‹ Prev</button>
+        <span id="caseCounter" class="case-counter">1 / 6</span>
+        <button id="nextCase" class="ghost-btn">Next ›</button>
+      </div>
+    </div>
+    <p class="hint">The agent was tuned on mixed decision traces, yet on <strong>sealed invoice-processing
+      cases it scores 0.840</strong> — its strongest domain. Step through real cases: the model reads an
+      invoice vs. its purchase order and makes the accounts-payable call. Gold = the teacher consensus.</p>
+    <div id="caseCard" class="case-card"></div>
+  </section>
+
   <!-- ===== Charts ===== -->
   <section class="panel">
     <h2>Progress &amp; results <span class="sub">— every number self-measured on a sealed test</span></h2>
@@ -112,6 +128,7 @@
   </footer>
 
   <script src="data.js"></script>
+  <script src="samples.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

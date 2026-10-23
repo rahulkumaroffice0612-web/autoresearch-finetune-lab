@@ -107,6 +107,34 @@ code { background: #0b1623; padding: 1px 6px; border-radius: 6px; color: #9fd3c7
 .loss { font-size: .9rem; color: var(--dim); }
 .loss b { color: var(--ink); }
 
+/* ---- Generalization case stepper ---- */
+.case-counter { color: var(--dim); font-size: .9rem; min-width: 48px; text-align: center; display: inline-block; }
+.case-card { margin-top: 8px; }
+.case-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 20px; }
+.case-scenario, .case-decisions { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; }
+.case-scenario h3, .case-decisions h3 { font-size: 1.05rem; margin: 0 0 12px; }
+.case-tag { display: inline-block; font-size: .72rem; color: #7fe0cf; background: rgba(42,157,143,.14);
+  border: 1px solid #2a9d8f55; padding: 2px 9px; border-radius: 999px; margin-bottom: 10px; }
+.facts { display: grid; gap: 7px; }
+.fact { display: flex; justify-content: space-between; gap: 12px; font-size: .9rem; border-bottom: 1px dashed var(--line); padding-bottom: 6px; }
+.fact .fk { color: var(--dim); }
+.fact .fv { font-weight: 600; text-align: right; }
+.vs { color: var(--dim); font-weight: 400; font-size: .8rem; }
+.score-pill { float: right; font-size: .78rem; font-weight: 700; padding: 3px 10px; border-radius: 999px;
+  background: rgba(231,111,81,.16); color: #f0a595; }
+.score-pill.perfect { background: rgba(42,157,143,.18); color: #7fe0cf; }
+.dtable { width: 100%; border-collapse: collapse; font-size: .9rem; }
+.dtable th { text-align: left; color: var(--dim); font-weight: 600; font-size: .78rem; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+.dtable td { padding: 9px 8px; border-bottom: 1px solid var(--line); }
+.dtable .d-label { color: #cddae6; }
+.dtable .d-pred { font-weight: 600; }
+.dtable .d-conf { color: var(--dim); font-weight: 400; font-size: .82rem; }
+.dtable .d-gold { color: var(--dim); }
+.dtable .d-mark { text-align: center; font-weight: 800; }
+.dtable tr.d-ok .d-mark { color: var(--keep); }
+.dtable tr.d-miss .d-mark { color: var(--revert); }
+.dtable tr.d-miss td { background: rgba(196,91,74,.07); }
+
 /* ---- Charts ---- */
 .charts { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .charts figure { margin: 0; }
@@ -145,4 +173,5 @@ tr.tinker-row td:first-child { color: #f0a595; }
   .stats { grid-template-columns: 1fr 1fr; }
   .charts { grid-template-columns: 1fr; }
   .guardrails ul { grid-template-columns: 1fr; }
+  .case-grid { grid-template-columns: 1fr; }
 }

@@ -63,6 +63,12 @@ The headline isn't the accuracy — it's the **KL from gold of 0.094** on a 0.8B
 autonomously, for ~$0, on an 18 GB Mac. On this benchmark, agreement-with-the-teacher (KL) is the
 metric that actually matters, and a tiny laptop model nailing it is the whole point.
 
+And it **generalizes**. The sealed test spans four domains; broken down per domain, the model hits
+**0.840 on invoice processing** — reading an invoice against its purchase order and making the
+accounts-payable call (approve / hold / manual review) — and its **best calibration (KL 0.074) on
+security incidents**. The live demo UI steps through real invoice cases: scenario on the left, the
+model's decision + confidence vs. the gold consensus on the right.
+
 ## How the agent actually reasons
 
 This is my favourite part, because Gemma isn't just dice-rolling configs — it reads its own history

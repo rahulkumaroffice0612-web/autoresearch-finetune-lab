@@ -118,6 +118,62 @@
     });
   })();
 
+  /* ---- Generalization: invoice case stepper ---- */
+  (function cases() {
+    const S = window.LAZY_SAMPLES || [];
+    if (!S.length) return;
+    const card = document.getElementById("caseCard");
+    const counter = document.getElementById("caseCounter");
+    let idx = 0;
+
+    const pretty = (v) =>
+      String(v).replace(/_/g, " ").replace(/\b\w/g, (m) => m.toUpperCase());
+
+    function render() {
+      const c = S[idx];
+      const facts = Object.entries(c.summary)
+        .map(([k, v]) => `<div class="fact"><span class="fk">${k}</span><span class="fv">${v}</span></div>`)
+        .join("");
+      const decisions = c.decisions
+        .map((d) => `
+          <tr class="${d.match ? "d-ok" : "d-miss"}">
+            <td class="d-label">${d.label}</td>
+            <td class="d-pred">${pretty(d.pred)} <span class="d-conf">${Math.round(d.conf * 100)}%</span></td>
+            <td class="d-gold">${pretty(d.gold)}</td>
+            <td class="d-mark">${d.match ? "✔" : "✗"}</td>
+          </tr>`)
+        .join("");
+      card.innerHTML = `
+        <div class="case-grid">
+          <div class="case-scenario">
+            <div class="case-tag">invoice · ${c.id.split("_").pop()}</div>
+            <h3>The scenario</h3>
+            <div class="facts">${facts}</div>
+          </div>
+          <div class="case-decisions">
+            <h3>Model decision <span class="vs">vs. gold</span>
+              <span class="score-pill ${c.hits === c.total ? "perfect" : ""}">${c.hits}/${c.total} match</span>
+            </h3>
+            <table class="dtable">
+              <thead><tr><th>Decision</th><th>Model (confidence)</th><th>Gold</th><th></th></tr></thead>
+              <tbody>${decisions}</tbody>
+            </table>
+          </div>
+        </div>`;
+      counter.textContent = `${idx + 1} / ${S.length}`;
+    }
+
+    document.getElementById("prevCase").addEventListener("click", () => {
+      idx = (idx - 1 + S.length) % S.length;
+      render();
+    });
+    document.getElementById("nextCase").addEventListener("click", () => {
+      idx = (idx + 1) % S.length;
+      render();
+    });
+    render();
+  })();
+
   /* ---- Kick off ---- */
   play("armA");
 })();

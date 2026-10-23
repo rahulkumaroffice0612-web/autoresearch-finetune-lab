@@ -39,6 +39,24 @@ from **1.04 → 0.84** — the single biggest gain in the search. Runs 3–5 the
 (label smoothing, weight decay, lower LoRA rank); they land close but don't beat run 2, so they are
 reverted. That is exactly the keep/revert discipline we want from an autonomous searcher.
 
+### Generalization — per-domain breakdown
+
+The sealed test spans four decision domains (100 cases each). Scoring the winner per domain shows it
+**generalizes best to invoice processing (0.840 accuracy)** and is **best-calibrated on security
+incidents (KL 0.074)** — both above the 0.770 overall. From `src/per_domain_scores.py` (reuses the
+committed predictions; no extra sealed read).
+
+| Domain | Cases | Accuracy ↑ | KL ↓ | Brier ↓ | ECE ↓ |
+|---|---:|---:|---:|---:|---:|
+| **invoice_processing** | 100 | **0.840** | 0.093 | 0.045 | 0.114 |
+| customer_service | 100 | 0.796 | 0.115 | 0.059 | 0.162 |
+| security_incidents | 100 | 0.738 | **0.074** | 0.043 | 0.163 |
+| agent_trace_observability | 100 | 0.706 | 0.094 | 0.056 | 0.156 |
+| **Overall** | 400 | 0.770 | 0.094 | 0.051 | 0.145 |
+
+The live demo UI (`web/`) steps through real invoice cases — the model reading an invoice against its
+purchase order and making the accounts-payable call, with confidence, versus the teacher consensus.
+
 ---
 
 ## 3. Gemma reasoning excerpts (verbatim from the logs)
