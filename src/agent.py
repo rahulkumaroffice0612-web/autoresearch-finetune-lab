@@ -15,6 +15,7 @@ from __future__ import annotations
 import json
 import os
 import random
+import re
 from dataclasses import asdict
 
 from train_config import BOUNDS, SCHEDULERS, TrainConfig
@@ -74,7 +75,9 @@ def _extract_json(text: str) -> str:
     # last resort: first '{' to its matching last '}'
     i, j = text.find("{"), text.rfind("}")
     if i != -1 and j != -1 and j > i:
-        return text[i:j + 1]
+        s = text[i:j + 1]
+    # tolerate common small-model slips: trailing commas before } or ]
+    s = re.sub(r",(\s*[}\]])", r"\1", s)
     return s
 
 
