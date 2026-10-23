@@ -62,7 +62,7 @@ is the cleaner story for a short video. Both draw from the same logs and the sam
 ```
 
 Needs only the built-in macOS `say` and `ffmpeg` (`brew install ffmpeg`). Produces `scene_N.mp3`
-for each scene plus a concatenated `narration.mp3` (~69s, voice = Samantha by default). This is the
+for each scene plus a concatenated `narration.mp3` (~72s, voice = Daniel, British male). This is the
 path used for the audio checked into the repo — no account, no cost. For a more natural voice,
 install a "Premium/Enhanced" one in *System Settings → Accessibility → Spoken Content → Manage
 Voices* and pass it with `--voice`.
