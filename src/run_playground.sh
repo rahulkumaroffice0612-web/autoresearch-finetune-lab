@@ -17,5 +17,6 @@ python -c "import gradio" 2>/dev/null || {
   echo "[playground] installing gradio..."; uv pip install "gradio>=5,<6" >/dev/null; }
 
 PORT="${PORT:-7860}"
-echo "[playground] loading model + starting server on :$PORT (first load ~15-20s)..."
+echo "[playground] loading model + starting server on :$PORT ..."
+echo "[playground] the model preloads at startup (~15-20s); wait for 'model ready', then open http://127.0.0.1:$PORT"
 exec python -u src/playground.py --port "$PORT" "$@"

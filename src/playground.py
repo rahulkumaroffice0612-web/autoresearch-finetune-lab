@@ -195,11 +195,27 @@ with gr.Blocks(title="LazyDecider Playground", theme=gr.themes.Soft()) as demo:
     inputs = [vendor, invoice_total, po_total, received_qty, ordered_qty,
               days_until_due, discount_days, terms, disputes_12m, invoices_12m, condition]
     preset.change(load_preset, preset, inputs)
-    btn.click(predict, inputs, [headline, table])
+    # Show a "working" note immediately, then run the model.
+    btn.click(lambda: ("### ⏳ Running the model…", None), None, [headline, table]).then(
+        predict, inputs, [headline, table]
+    )
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--share", action="store_true", help="also expose a temporary public link")
     ap.add_argument("--port", type=int, default=7860)
+    ap.add_argument("--no-preload", action="store_true", help="skip loading the model at startup")
     args = ap.parse_args()
+
+    # Load the model up front so the FIRST "Decide" click is instant instead of
+    # silently blocking ~15-20s. (The server is already responsive; this just
+    # moves the one-time load to startup, with a clear console message.)
+    if not args.no_preload:
+        print("[playground] preloading model (one-time, ~15-20s on Apple Silicon)...", flush=True)
+        try:
+            _load()
+            print("[playground] model ready — opening the UI.", flush=True)
+        except Exception as e:  # pragma: no cover
+            print(f"[playground] WARN: preload failed ({e}); will load on first click.", flush=True)
+
     demo.launch(share=args.share, server_port=args.port)
