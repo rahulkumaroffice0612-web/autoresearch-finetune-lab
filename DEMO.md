@@ -53,8 +53,21 @@ is the cleaner story for a short video. Both draw from the same logs and the sam
 
 ## Voiceover (ElevenLabs)
 
-The narration first draft is in `artifacts/demo_voiceover.md` — six blocks, one per scene above,
-~196 spoken words (~78s, fits the 90s target). Generate the audio with the official ElevenLabs SDK:
+### Option A — free, offline (macOS `say`, no account) ✅ used for the committed audio
+
+```bash
+.venv/bin/python src/make_voiceover_local.py                 # all scenes -> artifacts/demo_audio/
+.venv/bin/python src/make_voiceover_local.py --voice Daniel  # British male voice
+.venv/bin/python src/make_voiceover_local.py --scene 3       # re-do one scene
+```
+
+Needs only the built-in macOS `say` and `ffmpeg` (`brew install ffmpeg`). Produces `scene_N.mp3`
+for each scene plus a concatenated `narration.mp3` (~69s, voice = Samantha by default). This is the
+path used for the audio checked into the repo — no account, no cost. For a more natural voice,
+install a "Premium/Enhanced" one in *System Settings → Accessibility → Spoken Content → Manage
+Voices* and pass it with `--voice`.
+
+### Option B — ElevenLabs SDK (higher quality, needs a paid/credited account)
 
 ```bash
 npm install                                      # one-time: installs @elevenlabs/elevenlabs-js
@@ -63,14 +76,9 @@ node src/make_voiceover.mjs --scene 3             # re-do one scene
 node src/make_voiceover.mjs --voice <id>          # use a voice you own
 ```
 
-This writes `artifacts/demo_audio/scene_N.mp3` (drop each under its matching screen in the editor)
-plus a concatenated `narration.mp3`. The key is read from `../.env` (`ELEVENLABS_API_KEY`, never
-committed).
-
-> **Heads-up on the current key:** it's a *free* ElevenLabs tier, which can't synthesize the premade
-> library voices via the API (HTTP 402). To produce audio, either add $5 of API credits, or create a
-> personal/cloned voice in the ElevenLabs app and pass it with `--voice <id>`. The script prints this
-> exact guidance if it hits the limit.
+Reads the key from `../.env` (`ELEVENLABS_API_KEY`, never committed). Note: a *free* ElevenLabs tier
+can't synthesize library voices via the API (HTTP 402) — add API credits or use an owned voice. Until
+then, Option A is the working path.
 
 ## Where it goes
 

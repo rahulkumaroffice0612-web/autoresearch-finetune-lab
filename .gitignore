@@ -38,8 +38,9 @@ artifacts/best_model/*
 !artifacts/best_model/.eval_results/
 !artifacts/best_model/.eval_results/**
 
-# Generated demo narration audio (regenerable via src/make_voiceover.py)
-artifacts/demo_audio/
+# Generated demo narration audio: keep the committed MP3s (free macOS `say`
+# output), but ignore any stray scratch/probe files.
+artifacts/demo_audio/_*
 
 # Python
 .venv/
