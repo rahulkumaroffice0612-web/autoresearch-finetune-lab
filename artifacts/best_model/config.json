@@ -1,0 +1,15 @@
+{
+  "freeze_backbone": false,
+  "head_learning_rate": 0.001,
+  "learning_rate": 0.0002,
+  "label_smoothing": 0.0,
+  "lora_r": 16,
+  "lora_alpha": 32,
+  "lora_dropout": 0.05,
+  "batch_size": 4,
+  "grad_accum": 2,
+  "warmup_ratio": 0.1,
+  "weight_decay": 0.01,
+  "lr_scheduler": "cosine",
+  "epochs": 2
+}
