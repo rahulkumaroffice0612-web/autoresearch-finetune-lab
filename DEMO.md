@@ -51,6 +51,26 @@ is the cleaner story for a short video. Both draw from the same logs and the sam
 - `asciinema rec demo.cast` is a good lightweight option if you'd rather embed a terminal cast than
   an MP4; otherwise QuickTime screen recording → export to the DEV post.
 
+## Voiceover (ElevenLabs)
+
+The narration first draft is in `artifacts/demo_voiceover.md` — six blocks, one per scene above,
+~196 spoken words (~78s, fits the 90s target). Generate the audio with:
+
+```bash
+.venv/bin/python src/make_voiceover.py                 # all scenes -> artifacts/demo_audio/
+.venv/bin/python src/make_voiceover.py --scene 3       # re-do one scene
+.venv/bin/python src/make_voiceover.py --voice <id>    # use a voice you own
+```
+
+This writes `artifacts/demo_audio/scene_N.mp3` (drop each under its matching screen in the editor)
+plus a concatenated `narration.mp3`. The key is read from `../.env` (`ELEVENLABS_API_KEY`, never
+committed).
+
+> **Heads-up on the current key:** it's a *free* ElevenLabs tier, which can't synthesize the premade
+> library voices via the API (HTTP 402). To produce audio, either add $5 of API credits, or create a
+> personal/cloned voice in the ElevenLabs app and pass it with `--voice <id>`. The script prints this
+> exact guidance if it hits the limit.
+
 ## Where it goes
 
 Embed the final video (or asciinema cast) in `POST.md` at the **Demo** line, alongside the repo and
