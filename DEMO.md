@@ -1,31 +1,41 @@
 # Demo — recording script & storyboard
 
-A ~90-second screen capture that shows LazyDecider's overnight loop and the morning report.
-Everything here replays the **real** experiment logs, so the demo is honest and reproducible — no
-staged numbers, no live-server dependency during recording.
+A **~90–120 second** screen capture that shows LazyDecider's overnight loop, the morning report, and a
+**live playground run**. The loop/report sections replay the **real** experiment logs (honest,
+reproducible); the playground runs the **real model** on a custom invoice.
 
-## What to capture (target ~60–90s)
+## What to capture (target ~90–120s)
 
 | # | Screen | Say / show | ~time |
 |---|---|---|---|
 | 1 | Terminal, repo root | "LazyDecider: an open-weight agent fine-tunes a model while I sleep." Show `ls` of `src/`. | 0:00–0:08 |
 | 2 | Run the replay | `./.venv/bin/python src/demo.py --arm A` — Gemma proposes run 1 (head-only baseline) with its one-line reason. | 0:08–0:25 |
-| 3 | Continue | Run 2 unfreezes the backbone (LoRA) → eval loss falls 1.04 → 0.84 → **KEEP (new best)**. Runs 3–5 chase calibration and get **REVERTED**. | 0:25–0:50 |
-| 4 | Morning report | The loop prints the winner: acc **0.770**, KL **0.094**; Tinker confirm acc 0.601 vs 0.483 zero-shot. | 0:50–1:00 |
-| 5 | Open `REPORT.md` + charts | Show `artifacts/results_comparison.png` and `artifacts/gemma_learning_curves.png`. | 1:00–1:15 |
-| 6 | Browser (optional) | Flash the GitHub repo + the Hugging Face model page. | 1:15–1:30 |
+| 3 | Continue | Run 2 unfreezes the backbone (LoRA) → eval loss falls 1.04 → 0.84 → **KEEP (new best)**. Runs 3–5 chase calibration and get **REVERTED**. | 0:25–0:48 |
+| 4 | Morning report | The loop prints the winner: acc **0.770**, KL **0.094**; Tinker confirm acc 0.601 vs 0.483 zero-shot. | 0:48–0:58 |
+| 5 | Demo dashboard / charts | Show the `web/` dashboard: learning curves, results table, the per-domain generalization (invoice 0.840). | 0:58–1:12 |
+| 6 | **Playground (the payoff)** | `bash src/run_playground.sh` → open `http://127.0.0.1:7860`. Load the "Clean match" preset → **Decide** → `approve · 83%`. Then "Under-delivered −50%" → **manual review**. "The real model, on your own invoice." | 1:12–1:45 |
+| 7 | Browser (optional) | Flash the GitHub repo + the Hugging Face model page. | 1:45–2:00 |
+
+> Tip: start the playground **before** recording (so the model is already preloaded and the first
+> **Decide** is instant), then begin the capture.
 
 ## Exact commands to run on camera
 
 ```bash
 cd lazylab
 
+# 0. (before recording) start the playground so the model is preloaded
+bash src/run_playground.sh          # leave running; open http://127.0.0.1:7860
+
 # 1. the overnight loop, replayed from the real logs (readable pace)
 ./.venv/bin/python src/demo.py --arm A
 
-# 2. (optional) show the morning report and charts
+# 2. show the morning report, charts, and the web dashboard
 open REPORT.md
 open artifacts/results_comparison.png artifacts/gemma_learning_curves.png
+(cd web && python3 -m http.server 8777) &   # http://127.0.0.1:8777
+
+# 3. the payoff: in the playground, load a preset -> Decide -> show the decision
 ```
 
 If you want to re-record quickly without the typing delay, add `--fast`.

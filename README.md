@@ -71,6 +71,11 @@ src/
   score_test.py       the one-shot sealed-test read (hash-verified)
   tinker_confirm.py   the Tinker confirm run (4B LoRA, dollar-capped)
   run_gemma_search.sh launcher that points the agent at local Gemma
+  playground.py       interactive Gradio playground (real model, your own invoice)
+  run_playground.sh   one-command launcher for the playground
+  per_domain_scores.py   per-domain sealed-test breakdown (invoice best at 0.840)
+  make_report_charts.py  morning-report charts + Gemma excerpts
+  build_demo_data.py / build_demo_samples.py   bake real artifacts into web/
 tests/                scorer + config unit tests
 data/
   sealed/             test.jsonl (gitignored) + test.sha256 (tracked)
@@ -93,6 +98,23 @@ bash src/run_gemma_search.sh 20
 # Tinker confirm (needs TINKER_API_KEY; dollar-capped):
 .venv/bin/python src/tinker_confirm.py --max-steps 60 --n-test 150
 ```
+
+## Demo & playground
+
+- **Demo dashboard** (`web/`) — a self-contained static site that replays the overnight loop from the
+  real logs (Gemma proposals + reasons, ASHA keep/revert), the charts, the sealed-test table, an
+  interactive per-domain case stepper, and the narration. Serve locally with
+  `cd web && python3 -m http.server 8777`, or deploy free (see `render.yaml` / `web/README.md`).
+- **Interactive playground** (`src/playground.py`) — run the **real model** on your own invoice:
+
+  ```bash
+  bash src/run_playground.sh          # loads artifacts/best_model, opens http://127.0.0.1:7860
+  bash src/run_playground.sh --share   # also a temporary public gradio.live link
+  ```
+
+  The model preloads at startup (~15–20s on Apple Silicon, fully offline — no re-download) and returns
+  calibrated probabilities for all five accounts-payable decisions. It's the model's best domain
+  (0.840 sealed accuracy). See `DEMO.md` for the recording script.
 
 ## Credits
 
