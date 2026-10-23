@@ -129,6 +129,8 @@ retrains it and Tinker confirms it. The ten-minute job I automated? I never do i
 - **Live demo UI:** a static "night dashboard" that replays the real overnight loop — Gemma's
   proposals and reasons, the ASHA keep/revert decisions, the charts, the results table, and the
   narration. Source in `web/` (deploys free on Render, or any static host). *(paste your live URL here)*
+- **Try the model:** `src/playground.py` — a local Gradio app to run the real model on your own
+  invoice (`--share` for a temporary public link). See `DEMO.md`.
 - **Demo video:** *(embed the screen capture — see `DEMO.md` for the script)*
 
 Reproduce in four commands (`README.md` has the full version):

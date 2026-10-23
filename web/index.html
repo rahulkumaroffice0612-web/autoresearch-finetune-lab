@@ -77,6 +77,20 @@
       cases it scores 0.840</strong> — its strongest domain. Step through real cases: the model reads an
       invoice vs. its purchase order and makes the accounts-payable call. Gold = the teacher consensus.</p>
     <div id="caseCard" class="case-card"></div>
+
+    <div class="try-it">
+      <h3>▶ Try it yourself</h3>
+      <p>Run the <strong>real model</strong> on your own invoice — a local Gradio playground with sliders
+        for invoice total, PO total, quantities, due dates and vendor history. Three commands on a Mac
+        (Apple-Silicon MLX build):</p>
+      <pre><code>git clone https://github.com/rahulkumaroffice0612-web/autoresearch-finetune-lab
+cd autoresearch-finetune-lab
+uv venv --python 3.12 .venv &amp;&amp; uv pip install --python .venv/bin/python unsloth gradio
+.venv/bin/python src/playground.py            # opens http://127.0.0.1:7860
+# add --share for a temporary public link</code></pre>
+      <p class="hint">The playground loads <code>artifacts/best_model</code> and returns calibrated
+        probabilities for all five accounts-payable decisions — the same model behind the 0.840 number above.</p>
+    </div>
   </section>
 
   <!-- ===== Charts ===== -->

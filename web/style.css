@@ -135,6 +135,14 @@ code { background: #0b1623; padding: 1px 6px; border-radius: 6px; color: #9fd3c7
 .dtable tr.d-miss .d-mark { color: var(--revert); }
 .dtable tr.d-miss td { background: rgba(196,91,74,.07); }
 
+/* ---- Try it yourself ---- */
+.try-it { margin-top: 20px; background: var(--panel); border: 1px solid var(--line);
+  border-radius: 12px; padding: 18px 20px; }
+.try-it h3 { margin: 0 0 8px; font-size: 1.05rem; color: #7fe0cf; }
+.try-it pre { background: #0b1623; border: 1px solid var(--line); border-radius: 10px;
+  padding: 14px 16px; overflow-x: auto; margin: 12px 0; }
+.try-it pre code { background: none; padding: 0; color: #9fd3c7; font-size: .86rem; line-height: 1.7; }
+
 /* ---- Charts ---- */
 .charts { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .charts figure { margin: 0; }

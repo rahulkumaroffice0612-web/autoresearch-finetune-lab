@@ -80,7 +80,22 @@ Reads the key from `../.env` (`ELEVENLABS_API_KEY`, never committed). Note: a *f
 can't synthesize library voices via the API (HTTP 402) — add API credits or use an owned voice. Until
 then, Option A is the working path.
 
-## Where it goes
+## Interactive playground (`src/playground.py`)
 
+Run the **real model** on a custom invoice — a local Gradio app with form inputs and preset examples.
+On Apple Silicon it loads the MLX build in `artifacts/best_model` (load ~11s, predict ~0.5s).
+
+```bash
+uv pip install --python .venv/bin/python gradio
+.venv/bin/python src/playground.py            # http://127.0.0.1:7860
+.venv/bin/python src/playground.py --share     # also a temporary public gradio.live link
+```
+
+Returns calibrated probabilities for all five accounts-payable decisions (disposition, matches_order,
+discrepancy_severity, duplicate, urgency). The `--share` link is handy for recording the demo without
+screen-capturing your own machine. Note: this is the Apple-Silicon MLX build; for x86/Linux hosting
+you'd first convert to portable transformers weights (the unfinished N12 step).
+
+## Where it goes
 Embed the final video (or asciinema cast) in `POST.md` at the **Demo** line, alongside the repo and
 Hugging Face links.
