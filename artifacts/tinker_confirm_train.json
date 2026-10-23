@@ -1,0 +1,11 @@
+{
+  "base_model": "Qwen/Qwen3.5-4B",
+  "lora_rank": 16,
+  "steps": 60,
+  "batch": 8,
+  "lr": 0.0001,
+  "elapsed_s": 265.4,
+  "n_fit": 960,
+  "first_loss": 0.15353569388389587,
+  "last_loss": 0.053241465240716934
+}

@@ -1,0 +1,12 @@
+{
+  "layout": "clef",
+  "temperature": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "max_len": 1280,
+  "base_model": "unsloth/Qwen3.5-0.8B",
+  "load_in_4bit": false,
+  "fine_tuned": true
+}

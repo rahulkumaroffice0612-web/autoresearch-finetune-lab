@@ -17,6 +17,27 @@ artifacts/merged/
 *.safetensors
 *.gguf
 
+# Scratch run logs (stdout captures) — not part of the repo
+artifacts/*.out
+artifacts/*.log
+
+# Raw source image for the HF hero (published to HF as lazydecider.png)
+data/Gemini_Generated_Image_*.png
+
+# Large prediction dumps (regenerable by the scorer)
+artifacts/test_predictions.jsonl
+artifacts/tinker_test_predictions.jsonl
+
+# best_model/ is published to Hugging Face; keep only the human-readable card +
+# the leaderboard YAML in git, not the multi-GB weights/tokenizer blobs.
+artifacts/best_model/*
+!artifacts/best_model/README.md
+!artifacts/best_model/train_config.json
+!artifacts/best_model/select_metrics.json
+!artifacts/best_model/unsloth_decision_config.json
+!artifacts/best_model/.eval_results/
+!artifacts/best_model/.eval_results/**
+
 # Python
 .venv/
 __pycache__/

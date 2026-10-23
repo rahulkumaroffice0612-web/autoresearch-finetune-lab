@@ -1,0 +1,13 @@
+{
+  "n_decisions": 750,
+  "accuracy": 0.6013333333333334,
+  "kl_from_gold": 0.6424247595706634,
+  "brier": 0.1717280684875677,
+  "ece": 0.09403071483500798,
+  "n_cases": 150,
+  "model": "Qwen/Qwen3.5-4B (Tinker LoRA confirm)",
+  "train_steps": 60,
+  "eval_seconds": 86.0,
+  "parsed_ok": 150,
+  "parsed_fallback": 0
+}

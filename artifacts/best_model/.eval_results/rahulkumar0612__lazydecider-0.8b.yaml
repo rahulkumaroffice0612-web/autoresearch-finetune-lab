@@ -1,0 +1,36 @@
+- dataset:
+    id: LocalLLaMA/typed-decisions
+    task_id: accuracy
+  value: 0.77
+  date: "2026-10-23"
+  source:
+    url: https://huggingface.co/datasets/LocalLLaMA/typed-decisions
+    name: "Typed Decisions benchmark run on HF Jobs"
+  notes: "Model was fitted/fine-tuned on this benchmark's train split; not comparable with zero-shot rows."
+- dataset:
+    id: LocalLLaMA/typed-decisions
+    task_id: kl_from_gold
+  value: 0.0938
+  date: "2026-10-23"
+  source:
+    url: https://huggingface.co/datasets/LocalLLaMA/typed-decisions
+    name: "Typed Decisions benchmark run on HF Jobs"
+  notes: "Model was fitted/fine-tuned on this benchmark's train split; not comparable with zero-shot rows."
+- dataset:
+    id: LocalLLaMA/typed-decisions
+    task_id: brier
+  value: 0.051
+  date: "2026-10-23"
+  source:
+    url: https://huggingface.co/datasets/LocalLLaMA/typed-decisions
+    name: "Typed Decisions benchmark run on HF Jobs"
+  notes: "Model was fitted/fine-tuned on this benchmark's train split; not comparable with zero-shot rows."
+- dataset:
+    id: LocalLLaMA/typed-decisions
+    task_id: ece
+  value: 0.1454
+  date: "2026-10-23"
+  source:
+    url: https://huggingface.co/datasets/LocalLLaMA/typed-decisions
+    name: "Typed Decisions benchmark run on HF Jobs"
+  notes: "Model was fitted/fine-tuned on this benchmark's train split; not comparable with zero-shot rows."

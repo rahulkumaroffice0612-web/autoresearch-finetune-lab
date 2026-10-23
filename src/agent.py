@@ -161,7 +161,9 @@ class GemmaProposer:
                 "messages": [{"role": "system", "content": sys_prompt},
                              {"role": "user", "content": user}],
                 "temperature": 0.8,
-                "response_format": {"type": "json_object"},
+                # NB: no response_format. Bionic/newer LM Studio only accepts
+                # 'json_schema' or 'text' (rejects the old 'json_object' with 400),
+                # so we rely on _extract_json() to recover the object from prose/fences.
             },
             timeout=120,
         )
