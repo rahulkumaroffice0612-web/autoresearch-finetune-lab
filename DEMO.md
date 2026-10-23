@@ -54,12 +54,13 @@ is the cleaner story for a short video. Both draw from the same logs and the sam
 ## Voiceover (ElevenLabs)
 
 The narration first draft is in `artifacts/demo_voiceover.md` — six blocks, one per scene above,
-~196 spoken words (~78s, fits the 90s target). Generate the audio with:
+~196 spoken words (~78s, fits the 90s target). Generate the audio with the official ElevenLabs SDK:
 
 ```bash
-.venv/bin/python src/make_voiceover.py                 # all scenes -> artifacts/demo_audio/
-.venv/bin/python src/make_voiceover.py --scene 3       # re-do one scene
-.venv/bin/python src/make_voiceover.py --voice <id>    # use a voice you own
+npm install                                      # one-time: installs @elevenlabs/elevenlabs-js
+node src/make_voiceover.mjs                       # all scenes -> artifacts/demo_audio/
+node src/make_voiceover.mjs --scene 3             # re-do one scene
+node src/make_voiceover.mjs --voice <id>          # use a voice you own
 ```
 
 This writes `artifacts/demo_audio/scene_N.mp3` (drop each under its matching screen in the editor)

@@ -1,0 +1,13 @@
+{
+  "name": "lazydecider-voiceover",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "ElevenLabs demo voiceover generator for LazyDecider",
+  "scripts": {
+    "voiceover": "node src/make_voiceover.mjs"
+  },
+  "dependencies": {
+    "@elevenlabs/elevenlabs-js": "2.73.0"
+  }
+}
