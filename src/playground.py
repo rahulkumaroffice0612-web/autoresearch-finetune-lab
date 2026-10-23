@@ -17,7 +17,15 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
+
+# The fine-tuned weights in artifacts/best_model are self-contained (the merged
+# full model, not just an adapter), so loading must never hit the network to
+# re-fetch the base model. Force offline so a cached/local load is reused and
+# nothing re-downloads. Must be set BEFORE importing unsloth / huggingface_hub.
+os.environ.setdefault("HF_HUB_OFFLINE", "1")
+os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
 
 import gradio as gr
 
