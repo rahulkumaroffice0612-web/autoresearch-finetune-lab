@@ -33,9 +33,9 @@ REPO_PARENT = ROOT.parent
 VOICEOVER_MD = ROOT / "artifacts" / "demo_voiceover.md"
 OUT_DIR = ROOT / "artifacts" / "demo_audio"
 
-# Default voice: ElevenLabs "Rachel" (works once the account can use library
-# voices). Override with --voice to use a personal/cloned voice on the free tier.
-DEFAULT_VOICE = "21m00Tcm4TlvDq8ikWAM"
+# Default voice: a personal/owned voice on this account (bypasses the free-tier
+# library-voice block). Override with --voice.
+DEFAULT_VOICE = "kLhAstPcnnPxqzk6gS5i"
 MODEL_ID = "eleven_multilingual_v2"
 API = "https://api.elevenlabs.io/v1/text-to-speech"
 
