@@ -109,6 +109,11 @@ def train_and_score(config: TrainConfig, fit_rows, select_rows, pruner,
     train_s = time.time() - t0
     final_step = int(getattr(trainer.state, "global_step", 0))
 
+    # Compact per-logging-step curve (every eval_steps, ~12 points for 240 steps, a
+    # few KB). transformers builds state.log_history during training; we keep only the
+    # fields useful for a learning-curve plot and drop the rest.
+    train_curve = _extract_curve(getattr(trainer.state, "log_history", []))
+
     # Authoritative score: FULL select, regardless of pruning. A pruned run still gets
     # a (worse) number, which the agent learns from. evaluate() -> accuracy/ece/loss/record_accuracy.
     metrics = FastDecisionModel.evaluate(model, tok, full_select)
@@ -124,4 +129,28 @@ def train_and_score(config: TrainConfig, fit_rows, select_rows, pruner,
         "pruned": pruner.pruned_at is not None,
         "prune_reason": pruner.prune_reason,
         "rung_evals": pruner.rung_evals,
+        "train_curve": train_curve,
     }
+
+
+def _extract_curve(log_history: list[dict]) -> list[dict]:
+    """Merge train/eval log points into one step-indexed curve for plotting.
+
+    transformers emits separate dicts for train logs ({'loss','learning_rate',...})
+    and eval logs ({'eval_loss',...}); we fold them by step and keep only the fields a
+    learning-curve plot needs. ~12 points/run, a few KB."""
+    by_step: dict[int, dict] = {}
+    for entry in log_history:
+        step = entry.get("step")
+        if step is None:
+            continue
+        pt = by_step.setdefault(int(step), {"step": int(step)})
+        if "loss" in entry:
+            pt["train_loss"] = round(float(entry["loss"]), 5)
+        if "eval_loss" in entry:
+            pt["eval_loss"] = round(float(entry["eval_loss"]), 5)
+        if "learning_rate" in entry:
+            pt["lr"] = float(entry["learning_rate"])
+        if "grad_norm" in entry:
+            pt["grad_norm"] = round(float(entry["grad_norm"]), 5)
+    return [by_step[s] for s in sorted(by_step)]
