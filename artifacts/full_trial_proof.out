@@ -1,0 +1,72 @@
+[full +   0.0s] fit=960 select=120  RUNGS=(20, 60, 140, 240)
+[full +   0.0s] config: freeze=True head_lr=0.000168 ls=0.014 r=32 bs=2 ga=4 ep=2
+[full +   0.0s] predicted max_steps=240
+[full +   0.0s] train_and_score START (full 960 fit, full ladder)
+Fetching 16 files:   0%|          | 0/16 [00:00<?, ?it/s]Fetching 16 files: 100%|██████████| 16/16 [00:00<00:00, 2534.42it/s]
+Unsloth: Loading /var/folders/_m/gs_jk2t9261dqncrzmfxsltc0000gp/T/tmpjncwui9x via mlx-vlm (VLM)...
+Unsloth: Loading a text model through mlx-vlm; keeping the model on the mlx-vlm path and returning its tokenizer.
+Unsloth: LoRA applied — 20,447,232 trainable params (2.34% of 873,433,152 total)
+Unsloth: Rebound gated_delta_update in mlx_vlm.models.qwen3_5.language, mlx_vlm.models.qwen3_5.speculative_verifier.
+Unsloth: Patched mlx-vlm GatedDeltaNet with memory-efficient custom VJP.
+Unsloth: Rebound gated_delta_update in mlx_vlm.models.glm5_next.language, mlx_vlm.models.kimi_k3.language.
+Unsloth: Patched shared mlx-vlm GatedDeltaNet with custom VJP.
+Unsloth: Patched GatedDeltaNet with memory-efficient custom VJP.
+Unsloth: Rebound gated_delta_update in mlx_lm.models.qwen3_5, mlx_lm.models.qwen3_next.
+Unsloth: Fixed Qwen3.5 attention for training (cache=None).
+Unsloth: Disabled fused MRoPE kernel on 6 modules for training (no VJP).
+[unsloth_zoo.mlx.inference|WARNING]mlx_vlm.models.qwen3_5.gated_delta.gated_delta_update differs from the version the MLX fusions were written against; the native method stays in use
+[full +1101.7s] train_and_score DONE
+[full +1101.7s] RESULT: {
+  "config": {
+    "freeze_backbone": true,
+    "head_learning_rate": 0.000168,
+    "learning_rate": 0.000128,
+    "label_smoothing": 0.014,
+    "lora_r": 32,
+    "lora_alpha": 8,
+    "lora_dropout": 0.037,
+    "batch_size": 2,
+    "grad_accum": 4,
+    "warmup_ratio": 0.021,
+    "weight_decay": 0.009,
+    "lr_scheduler": "constant_with_warmup",
+    "epochs": 2
+  },
+  "reason": "random draw from search space",
+  "select": {
+    "accuracy": 0.5016666666666667,
+    "ece": 0.05149258216222128,
+    "loss": 1.060976150110364,
+    "record_accuracy": 0.10833333333333334
+  },
+  "max_steps": 240,
+  "final_step": 240,
+  "train_seconds": 1025.79,
+  "s_per_step": 4.274,
+  "pruned": false,
+  "prune_reason": null,
+  "rung_evals": [
+    {
+      "rung": 20,
+      "step": 20,
+      "eval_loss": 1.2543190383911134
+    },
+    {
+      "rung": 60,
+      "step": 60,
+      "eval_loss": 1.222233829498291
+    },
+    {
+      "rung": 140,
+      "step": 140,
+      "eval_loss": 1.1721649551391602
+    },
+    {
+      "rung": 240,
+      "step": 240,
+      "eval_loss": 1.188863296508789
+    }
+  ]
+}
+[full +1101.7s] rung_evals: [{"rung": 20, "step": 20, "eval_loss": 1.2543190383911134}, {"rung": 60, "step": 60, "eval_loss": 1.222233829498291}, {"rung": 140, "step": 140, "eval_loss": 1.1721649551391602}, {"rung": 240, "step": 240, "eval_loss": 1.188863296508789}]
+[full +1101.7s] FULL TRIAL COMPLETE OK
