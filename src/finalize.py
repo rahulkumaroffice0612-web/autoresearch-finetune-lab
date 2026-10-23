@@ -77,7 +77,10 @@ def main() -> int:
     metrics = _train_score_save(config, fit_rows, select_rows, out)
     print(f"[finalize] retrained select: {json.dumps(metrics)}", flush=True)
     print(f"[finalize] SAVED model to {out}", flush=True)
-    (out / "config.json").write_text(json.dumps(config.key(), indent=2) + "\n")
+    # NOTE: do NOT write config.json here — save_pretrained_merged already wrote the
+    # architecture config.json (needed to reload). Use a distinct filename for the
+    # training hyperparameters so we don't clobber it.
+    (out / "train_config.json").write_text(json.dumps(config.key(), indent=2) + "\n")
     (out / "select_metrics.json").write_text(json.dumps(metrics, indent=2) + "\n")
     return 0
 
