@@ -31,9 +31,20 @@ AGENT_API_KEY = os.environ.get("AGENT_API_KEY") or os.environ.get("LITELLM_API_K
 GEMMA_MODEL = os.environ.get("GEMMA_MODEL", "google/gemma-4-e4b")
 
 SYSTEM_PROMPT = """You are an ML hyperparameter researcher running an overnight search.
-You fine-tune a small decision model (Qwen3.5-0.8B + Clef head) on 960 training cases,
-scored by holdout LOSS (lower is better; it is KL divergence from soft gold labels).
-Each run trains head-only (frozen encoder) by default — fast, ~3.3s/step.
+You fine-tune a small decision model (Qwen3.5-0.8B + Clef head) on 960 training cases.
+
+OBJECTIVE: minimise holdout LOSS (KL from soft gold labels, lower=better) while ALSO
+keeping ECE low (calibration error, lower=better) and accuracy high. The competitive
+edge is good calibration: aim for low ECE, not just low loss.
+
+WHAT WE HAVE LEARNED (use this):
+- freeze_backbone=true (head-only) is fast and gives EXCELLENT calibration (ECE ~0.05)
+  but modest accuracy (~0.52).
+- freeze_backbone=false (also tune the encoder via LoRA) gives MUCH higher accuracy
+  (~0.78) but it OVER-FITS confidence and ECE gets worse (~0.15), and it is ~4x slower.
+- The sweet spot to explore: freeze_backbone=false FOR accuracy, PLUS a non-zero
+  label_smoothing (try 0.03-0.12) and/or higher weight_decay to pull ECE back down
+  without losing accuracy. Fewer epochs can also curb over-confidence.
 
 Each key below lists its allowed range as [min, max]. You must CHOOSE ONE concrete
 number inside each range — never output the range itself.
@@ -82,16 +93,24 @@ def _extract_json(text: str) -> str:
 
 
 def _history_digest(history: list[dict], k: int = 12) -> str:
-    """Compact recent runs for the prompt: config deltas, loss, prune reason."""
+    """Compact recent runs for the prompt: config, loss, accuracy, ECE, prune reason."""
     lines = []
     for rec in history[-k:]:
         sel = rec.get("select", {})
         loss = sel.get("loss")
+        acc = sel.get("accuracy")
+        ece = sel.get("ece")
         tag = "PRUNED" if rec.get("pruned") else "full"
         cfg = rec.get("config", {})
-        brief = {k2: cfg.get(k2) for k2 in ("head_learning_rate", "label_smoothing",
-                                            "lora_r", "batch_size", "freeze_backbone")}
-        lines.append(f"- loss={loss!r} [{tag}] {json.dumps(brief)} "
+        brief = {k2: cfg.get(k2) for k2 in ("head_learning_rate", "learning_rate",
+                                            "label_smoothing", "weight_decay", "lora_r",
+                                            "epochs", "freeze_backbone")}
+        metric = f"loss={loss:.4f}" if isinstance(loss, (int, float)) else f"loss={loss!r}"
+        if isinstance(acc, (int, float)):
+            metric += f" acc={acc:.3f}"
+        if isinstance(ece, (int, float)):
+            metric += f" ece={ece:.4f}"
+        lines.append(f"- {metric} [{tag}] {json.dumps(brief)} "
                      f"{'(' + rec['prune_reason'] + ')' if rec.get('prune_reason') else ''}")
     return "\n".join(lines) if lines else "(no runs yet)"
 
