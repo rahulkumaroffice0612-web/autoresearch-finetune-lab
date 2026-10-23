@@ -61,14 +61,17 @@ retrained once and scored on a sealed test set. No hand-tuning.
 - [ ] Agent-reasoning excerpts: a few one-line "why" entries from `experiments_armA.jsonl`.
 - [ ] Final comparison vs leaderboard neighbours (calibration angle — see §18.5 of the design doc).
 
-### E. DEV post — NOT STARTED (the thing judged most)
-- [ ] Draft following the outline: backstory → what I built → demo → code → how it works
-      (loop + guardrails) → "my agent tried to game the score" → why open matters → lazy payoff → prizes.
-- [ ] Embed repo + HF model + demo video.
-- [ ] Tags `#devchallenge` `#hf26challenge`.
+### E. DEV post — DRAFTED (`POST.md`)
+- [x] Draft following the outline: backstory → what I built → results → how the agent reasons →
+      "my agent tried to game the score" → why open matters → lazy payoff → prizes.
+- [x] Embed repo + HF model + charts (cover image = `results_comparison.png`).
+- [x] Tags `#devchallenge` `#hf26challenge`.
+- [ ] Publish on DEV.to and paste the demo video/cast into the Demo line.
 
-### F. Demo — NOT STARTED
-- [ ] Short screen capture: a run proposing a config + the morning report/table.
+### F. Demo — SCRIPTED (`DEMO.md` + `src/demo.py`)
+- [x] `src/demo.py` replays the real logs (Gemma proposal + reason → ASHA rungs → keep/revert → report).
+- [x] `DEMO.md` storyboard + exact on-camera commands + live variant.
+- [ ] Record the ~90s screen capture and embed it in the post.
 
 ---
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Run a short autonomous search driven by LOCAL Gemma 4 E4B (LM Studio).
-# Prereqs (checked below): LM Studio server up on :1234 with gemma-4-e4b loaded.
+# Prereqs (checked below): LM Studio / Bionic server up on :1235 with gemma-4-e4b-it-mlx loaded.
 #
 # This produces real experiment-log entries tagged source="gemma" with Gemma's
 # one-line reasons — evidence for the "Best Use of Gemma" claim (the agent that
