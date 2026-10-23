@@ -1,0 +1,22 @@
+# Render static-site deploy for the LazyDecider demo UI.
+# https://render.com/docs/static-sites
+#
+# One-click: push this repo to GitHub, then on Render choose "New +" -> "Blueprint",
+# point it at the repo, and Render reads this file. The site is pure static (no build),
+# so it deploys in seconds and is free.
+services:
+  - type: web
+    name: lazydecider-demo
+    runtime: static
+    # The site lives in web/; assets are self-contained there.
+    staticPublishPath: ./web
+    # Nothing to build — data.js + assets are committed.
+    buildCommand: ""
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=300
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

@@ -42,6 +42,9 @@ artifacts/best_model/*
 # output), but ignore any stray scratch/probe files.
 artifacts/demo_audio/_*
 
+# Demo UI scratch assets (the builder may emit temporary _*.png before resizing)
+web/assets/_*
+
 # Python
 .venv/
 __pycache__/

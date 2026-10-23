@@ -120,7 +120,10 @@ retrains it and Tinker confirms it. The ten-minute job I automated? I never do i
 
 - **Repo:** https://github.com/rahulkumaroffice0612-web/autoresearch-finetune-lab
 - **Model:** https://huggingface.co/rahulkumar0612/lazydecider-0.8b
-- **Demo:** *(embed the screen capture here — see `DEMO.md` for the script)*
+- **Live demo UI:** a static "night dashboard" that replays the real overnight loop — Gemma's
+  proposals and reasons, the ASHA keep/revert decisions, the charts, the results table, and the
+  narration. Source in `web/` (deploys free on Render, or any static host). *(paste your live URL here)*
+- **Demo video:** *(embed the screen capture — see `DEMO.md` for the script)*
 
 Reproduce in four commands (`README.md` has the full version):
 

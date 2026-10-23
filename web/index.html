@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LazyDecider — an open-weight agent fine-tunes a model while you sleep</title>
+  <meta name="description" content="LazyDecider: a local Gemma 4 E4B agent proposes fine-tuning configs overnight, an ASHA loop prunes the losers, and a Tinker run confirms the winner. Calibration-per-dollar, on a laptop." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ===== Hero ===== -->
+  <header class="hero">
+    <div class="hero-text">
+      <div class="badges">
+        <span class="badge">#devchallenge</span>
+        <span class="badge">#hf26challenge</span>
+        <span class="badge badge-accent">Slow &amp; Steady</span>
+      </div>
+      <h1>Lazy<span class="accent">Decider</span></h1>
+      <p class="tagline">
+        I go to sleep. An <strong>open-weight agent</strong> fine-tunes a model for me —
+        proposing configs, pruning the losers, and leaving a report by morning.
+        No cloud bill. It all runs on a laptop.
+      </p>
+      <div class="pipeline">
+        <span class="step">🦥 Gemma 4 E4B <em>proposes</em></span>
+        <span class="arrow">→</span>
+        <span class="step">✂️ ASHA <em>prunes</em></span>
+        <span class="arrow">→</span>
+        <span class="step">🔬 Tinker <em>confirms</em></span>
+      </div>
+      <div class="player">
+        <button id="playBtn" class="play-btn" aria-label="Play narration">▶ Play narration</button>
+        <span class="player-note">British narration, ~72s — the overnight story.</span>
+        <audio id="narration" src="assets/narration.mp3" preload="none"></audio>
+      </div>
+    </div>
+    <div class="hero-img">
+      <img src="assets/lazydecider_cover.png" alt="A sloth in a hammock watching config cards get kept or reverted" />
+    </div>
+  </header>
+
+  <!-- ===== Headline stats ===== -->
+  <section class="stats" id="stats"></section>
+
+  <!-- ===== Overnight replay ===== -->
+  <section class="panel">
+    <div class="panel-head">
+      <h2>The overnight loop <span class="sub">— replayed from the real log</span></h2>
+      <div class="controls">
+        <label>arm
+          <select id="armSelect">
+            <option value="armA">A · ASHA search</option>
+            <option value="armB">B · head-only sweep</option>
+          </select>
+        </label>
+        <button id="replayBtn" class="ghost-btn">↻ Replay</button>
+      </div>
+    </div>
+    <p class="hint">Gemma reads its own history and proposes one config at a time, with a one-line reason.
+      The ASHA pruner trains it, and we <span class="keep">keep</span> it only if it beats the best on a
+      frozen split — otherwise <span class="revert">revert</span>.</p>
+    <div id="runs" class="runs"></div>
+  </section>
+
+  <!-- ===== Charts ===== -->
+  <section class="panel">
+    <h2>Progress &amp; results <span class="sub">— every number self-measured on a sealed test</span></h2>
+    <div class="charts">
+      <figure>
+        <img src="assets/gemma_learning_curves.png" alt="ASHA select-loss curves per Gemma-proposed config" />
+        <figcaption>Run 2 — Gemma unfreezes the backbone with LoRA — drops validation loss 1.04 → 0.84, the night's biggest jump.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/results_comparison.png" alt="Sealed-test accuracy and calibration comparison" />
+        <figcaption>The 0.8B winner lands 0.770 accuracy with a very low KL-from-gold of 0.094.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===== Results table ===== -->
+  <section class="panel">
+    <h2>Sealed-test results</h2>
+    <div class="table-wrap">
+      <table id="resultsTable">
+        <thead>
+          <tr><th>Model</th><th>Role</th><th>Accuracy ↑</th><th>KL ↓</th><th>Brier ↓</th><th>ECE ↓</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="hint">The headline is the <strong>KL from gold of 0.094</strong> on a 0.8B model found
+      autonomously, for ~$0, on an 18 GB Mac. Tinker independently confirms a clear lift over zero-shot.</p>
+  </section>
+
+  <!-- ===== Guardrails ===== -->
+  <section class="panel guardrails">
+    <h2>The "can't cheat" part</h2>
+    <ul>
+      <li>🔒 <strong>Sealed test</strong> — only its SHA-256 is committed; the worker literally can't read the cases.</li>
+      <li>📏 <strong>Official scorer</strong> — copies the dataset's grading arithmetic verbatim.</li>
+      <li>💸 <strong>Tinker spend cap in code</strong> — the free local loop strips <code>TINKER_*</code> from its env.</li>
+      <li>🧊 <strong>Config frozen first</strong> — every finalist is committed to git before its one-shot sealed read.</li>
+    </ul>
+  </section>
+
+  <!-- ===== Links ===== -->
+  <footer class="links" id="links">
+    <h2>Open all the way down</h2>
+    <div class="link-row"></div>
+    <p class="made">Open agent · open model · sealed test · built on a laptop, while asleep.</p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
