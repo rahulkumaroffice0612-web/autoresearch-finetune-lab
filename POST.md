@@ -2,7 +2,7 @@
 title: "LazyDecider: I taught an open-weight agent to fine-tune a model while I slept"
 published: false
 tags: devchallenge, hf26challenge, machinelearning, opensource
-cover_image: https://raw.githubusercontent.com/rahulkumaroffice0612-web/autoresearch-finetune-lab/main/artifacts/results_comparison.png
+cover_image: https://raw.githubusercontent.com/rahulkumaroffice0612-web/autoresearch-finetune-lab/main/artifacts/lazydecider_cover.png
 ---
 
 > **DEV Hacktoberfest 2026 — Week 3, "Slow and Steady."**
@@ -23,6 +23,8 @@ proposing configs, training them, throwing out the losers, and leaving a tidy re
 morning? No cloud bill. No API meter spinning. Just a laptop quietly getting smarter overnight.
 
 That project is **LazyDecider**.
+
+![LazyDecider — an open-weight agent keeps the winning configs and reverts the rest, while you nap](https://raw.githubusercontent.com/rahulkumaroffice0612-web/autoresearch-finetune-lab/main/artifacts/lazydecider_cover.png)
 
 ## What I built
 
@@ -57,7 +59,7 @@ Everything below was produced by my own scorer on my own sealed split — no bor
 | **Tinker 4B (confirm)** | cloud referee | 0.601 | 0.642 | 0.172 | 0.094 |
 | **LazyDecider 0.8B** | **the winner** | **0.770** | **0.094** | **0.051** | 0.145 |
 
-The headline isn't the accuracy — it's the **KL from gold of 0.094** on an 0.8B model found
+The headline isn't the accuracy — it's the **KL from gold of 0.094** on a 0.8B model found
 autonomously, for ~$0, on an 18 GB Mac. On this benchmark, agreement-with-the-teacher (KL) is the
 metric that actually matters, and a tiny laptop model nailing it is the whole point.
 
