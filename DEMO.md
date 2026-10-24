@@ -117,9 +117,11 @@ animation plays for real, then the generalization card, charts, and results tabl
 
 How it's produced (headless Chromium via Playwright → ffmpeg, all local, no screen capture):
 
-1. `src/record_dashboard.py` opens the served `web/` dashboard, injects a cursor, clicks **Replay** so
-   the loop animates, and smooth-scrolls through every section paced to the scene durations. Playwright
-   records it; ffmpeg retimes the clip to exactly the scenes-1–5 narration length (62.08s).
+1. `src/record_dashboard.py` records the `web/` dashboard **one clip per scene** (each in its own
+   Playwright context), injecting a cursor, clicking **Replay** so the loop animates, and smooth-
+   scrolling the section for that beat. Each scene clip is then retimed independently to its exact
+   narration length, so scene boundaries line up frame-accurately (a single global retime drifts the
+   later scenes, which is why it's done per scene).
 2. `src/record_playground.py` drives the live Gradio playground (preset → Decide → real model output)
    and records it (see below).
 3. The dashboard clip gets scenes-1–5 narration; a short "Try it yourself" card + the playground clip
