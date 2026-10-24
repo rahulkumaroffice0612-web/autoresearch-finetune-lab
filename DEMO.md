@@ -108,23 +108,25 @@ you'd first convert to portable transformers weights (the unfinished N12 step).
 
 ## Auto-generated demo video (no screen recording needed)
 
-A committed **~72s narrated MP4** at `artifacts/demo_video/lazydecider_demo.mp4` (1280×720, H.264+AAC)
-is assembled entirely from **real artifacts** — the `web/` dashboard (overnight loop, keep/revert,
-morning report, charts) for scenes 1–5, and the **live playground's real inference output** for the
-scene-6 payoff (`approve · 83%` → the under/over cases). It is muxed to the committed
-`artifacts/demo_audio/narration.mp3`, so the visuals track the six narration beats.
+A committed **~85s narrated MP4** at `artifacts/demo_video/lazydecider_demo.mp4` (1280×720, H.264+AAC)
+is a **fully live capture** — a real browser scrolls through the `web/` dashboard (the overnight-loop
+animation plays for real, then the generalization card, charts, and results table) and then drives the
+**live playground** (loads an invoice preset, presses **Decide**, shows the real `approve · 83%` and
+`manual review · 44%` output). A synthetic cursor is visible throughout. It is muxed to the committed
+`artifacts/demo_audio/narration.mp3`, paced to the six narration beats.
 
-How it's produced (headless Chrome screenshots → ffmpeg, all local, no screen capture):
+How it's produced (headless Chromium via Playwright → ffmpeg, all local, no screen capture):
 
-1. Launch the playground, wait for `model ready`, capture a headless screenshot of the live UI and
-   drive `/predict` via `gradio_client` for the three invoice presets (the real distributions).
-2. Render the `web/` dashboard (served locally) to a tall PNG and crop one 1280×720 window per scene.
-3. Render the playground result as a themed card per preset from the captured `results.json`.
-4. For each scene, build a still clip held for that scene's narration duration (with in/out fades),
-   `concat` them, then mux `narration.mp3`.
+1. `src/record_dashboard.py` opens the served `web/` dashboard, injects a cursor, clicks **Replay** so
+   the loop animates, and smooth-scrolls through every section paced to the scene durations. Playwright
+   records it; ffmpeg retimes the clip to exactly the scenes-1–5 narration length (62.08s).
+2. `src/record_playground.py` drives the live Gradio playground (preset → Decide → real model output)
+   and records it (see below).
+3. The dashboard clip gets scenes-1–5 narration; a short "Try it yourself" card + the playground clip
+   get scene-6 narration; the two segments are concatenated into the final MP4.
 
-`poster.png` beside the MP4 is a title-frame thumbnail for embedding. To re-record live instead, the
-QuickTime storyboard above still applies.
+`poster.png` beside the MP4 is a thumbnail. To re-record live by hand instead, the QuickTime
+storyboard above still applies.
 
 ## Live playground recording (real cursor, real inference)
 

@@ -133,12 +133,12 @@ retrains it and Tinker confirms it. The ten-minute job I automated? I never do i
   type an invoice (total, PO, quantities, due date, vendor history) and watch the **real model** make
   the accounts-payable call with calibrated confidence. Add `--share` for a temporary public link.
   See `DEMO.md`.
-- **Demo video:** a ~95s narrated walkthrough — the overnight loop, the keep/revert discipline, the
-  morning report, the charts — and then a **live, cursor-driven playground recording** where the real
-  0.8B model loads an invoice preset, you press **Decide**, and it returns `approve · 83%` (then the
+- **Demo video:** a ~85s **fully live, narrated** walkthrough — a real browser scrolls the dashboard
+  while the overnight loop animates (keep/revert), then drives the **live playground**: it loads an
+  invoice preset, presses **Decide**, and the real 0.8B model returns `approve · 83%` (then the
   `manual review` discrepancy case). See `artifacts/demo_video/lazydecider_demo.mp4`
-  (`playground_live.mp4` is the standalone live clip). *(upload to the DEV post or YouTube and paste
-  the link here)*
+  (`playground_live.mp4` is the standalone live playground clip). *(upload to the DEV post or YouTube
+  and paste the link here)*
 
 Reproduce in four commands (`README.md` has the full version):
 
