@@ -126,6 +126,27 @@ How it's produced (headless Chrome screenshots → ffmpeg, all local, no screen 
 `poster.png` beside the MP4 is a title-frame thumbnail for embedding. To re-record live instead, the
 QuickTime storyboard above still applies.
 
+## Live playground recording (real cursor, real inference)
+
+`artifacts/demo_video/playground_live.mp4` (~21s) is a genuine recording of the **live Gradio
+playground** being driven end to end — a synthetic cursor glides to the preset dropdown, loads the
+"Clean match" invoice, presses **Decide**, and the real 0.8B model returns `approve · 83%`; then it
+loads the "Under-delivered −50%" case and the model returns `manual review · 44%`. Nothing is faked:
+the form values and the probability table are the model's actual output. This clip is also appended to
+the end of the main `lazydecider_demo.mp4` after a short "Try it yourself" card.
+
+It's produced headlessly with Playwright (no screen capture needed):
+
+```bash
+uv pip install --python .venv/bin/python playwright==1.63.0
+.venv/bin/python -m playwright install chromium
+# start the playground, wait for 'model ready', then:
+.venv/bin/python src/record_playground.py --port 7870 --out artifacts/demo_video/playground_live.webm
+```
+
+`src/record_playground.py` launches Chromium with Playwright's video recorder, injects a visible
+cursor + click ripple, and clicks the real controls, waiting for the real model response between steps.
+
 ## Where it goes
 Embed the final video (`artifacts/demo_video/lazydecider_demo.mp4`) or an asciinema cast in `POST.md`
 at the **Demo** line, alongside the repo and Hugging Face links.
