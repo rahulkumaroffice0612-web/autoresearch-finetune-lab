@@ -106,6 +106,26 @@ discrepancy_severity, duplicate, urgency). The `--share` link is handy for recor
 screen-capturing your own machine. Note: this is the Apple-Silicon MLX build; for x86/Linux hosting
 you'd first convert to portable transformers weights (the unfinished N12 step).
 
+## Auto-generated demo video (no screen recording needed)
+
+A committed **~72s narrated MP4** at `artifacts/demo_video/lazydecider_demo.mp4` (1280×720, H.264+AAC)
+is assembled entirely from **real artifacts** — the `web/` dashboard (overnight loop, keep/revert,
+morning report, charts) for scenes 1–5, and the **live playground's real inference output** for the
+scene-6 payoff (`approve · 83%` → the under/over cases). It is muxed to the committed
+`artifacts/demo_audio/narration.mp3`, so the visuals track the six narration beats.
+
+How it's produced (headless Chrome screenshots → ffmpeg, all local, no screen capture):
+
+1. Launch the playground, wait for `model ready`, capture a headless screenshot of the live UI and
+   drive `/predict` via `gradio_client` for the three invoice presets (the real distributions).
+2. Render the `web/` dashboard (served locally) to a tall PNG and crop one 1280×720 window per scene.
+3. Render the playground result as a themed card per preset from the captured `results.json`.
+4. For each scene, build a still clip held for that scene's narration duration (with in/out fades),
+   `concat` them, then mux `narration.mp3`.
+
+`poster.png` beside the MP4 is a title-frame thumbnail for embedding. To re-record live instead, the
+QuickTime storyboard above still applies.
+
 ## Where it goes
-Embed the final video (or asciinema cast) in `POST.md` at the **Demo** line, alongside the repo and
-Hugging Face links.
+Embed the final video (`artifacts/demo_video/lazydecider_demo.mp4`) or an asciinema cast in `POST.md`
+at the **Demo** line, alongside the repo and Hugging Face links.

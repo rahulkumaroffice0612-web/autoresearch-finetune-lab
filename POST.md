@@ -133,7 +133,10 @@ retrains it and Tinker confirms it. The ten-minute job I automated? I never do i
   type an invoice (total, PO, quantities, due date, vendor history) and watch the **real model** make
   the accounts-payable call with calibrated confidence. Add `--share` for a temporary public link.
   See `DEMO.md`.
-- **Demo video:** *(embed the screen capture — see `DEMO.md` for the script)*
+- **Demo video:** a ~72s narrated walkthrough — the overnight loop, the keep/revert discipline, the
+  morning report, and the live playground making the accounts-payable call on a real invoice. See
+  `artifacts/demo_video/lazydecider_demo.mp4` (synced to the committed narration). *(upload to the DEV
+  post or YouTube and paste the link here)*
 
 Reproduce in four commands (`README.md` has the full version):
 
