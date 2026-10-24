@@ -71,6 +71,13 @@ code { background: #0b1623; padding: 1px 6px; border-radius: 6px; color: #9fd3c7
 .stat .lbl { color: var(--dim); font-size: .85rem; }
 .stat.win .num { color: var(--winner); }
 
+/* ---- Demo video ---- */
+.demo-video video {
+  width: 100%; border-radius: 12px; border: 1px solid var(--line);
+  background: #000; display: block; box-shadow: 0 16px 44px rgba(0,0,0,.4);
+}
+.demo-video .hint a { color: #9fd3c7; }
+
 /* ---- Panels ---- */
 .panel { max-width: 1100px; margin: 26px auto; padding: 26px; background: var(--bg2);
   border: 1px solid var(--line); border-radius: 18px; }
